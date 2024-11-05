@@ -14,11 +14,8 @@ import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
-
     private val client = OkHttpClient()
-
     private val request = OkHttpRequest(client)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +31,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun fetchGitHubInfo(strURL: String) {
         request.GET(strURL, object: Callback {
             override fun onResponse(call: Call, response: Response) {
@@ -51,21 +47,18 @@ class MainActivity : AppCompatActivity() {
                             val blog = userObject.getString("blog")
                             val bio = userObject.getString("bio")
                             val company = userObject.getString("company")
-                            binding.tvUserInfo.text =
-                                "${id}\n${name}\n${url}\n${blog}\n${bio}\n${company}"
+                            binding.tvUserInfo.text = "${id}\n${name}\n${url}\n${blog}\n${bio}\n${company}"
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 }
             }
-
             override fun onFailure(call: Call, e: IOException) {
                 println("Request Failure.")
             }
         })
     }
-
     override fun onResume() {
         super.onResume()
         binding.tvSearch.setText("")
